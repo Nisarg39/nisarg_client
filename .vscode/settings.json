@@ -1,0 +1,5 @@
+{
+    "cody.codebase": "",
+    "cody.editorTitleCommandIcon": true,
+    "cody.autocomplete.advanced.provider": "experimental-ollama"
+}
