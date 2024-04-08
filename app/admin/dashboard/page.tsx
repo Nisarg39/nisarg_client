@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { getClients } from "../admin_actions"
 import AdminDashboard from "@/components/ui/AdminDashboard";
 
-export default function page() {
+export default function Page() {
 
   const [firm, setFirm] = useState([{}]);
 

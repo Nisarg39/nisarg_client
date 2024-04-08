@@ -9,7 +9,7 @@ import { Card,
 import Link from 'next/link'
 import { Separator } from '@radix-ui/react-dropdown-menu'
 
-const page = () => {
+const Home = () => {
   const [selected, newSelected] = React.useState(0);
 
   return (
@@ -62,4 +62,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Home
