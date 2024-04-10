@@ -14,10 +14,10 @@ const Home = () => {
 
   return (
 
-     <div className='flex flex-col justify-center items-center min-h-screen '>
+     <div className='flex flex-col justify-center items-center min-h-screen w-100'>
       {selected === 1 && 
          <>
-         <CreateUserForm /> 
+         <CreateUserForm isAdmin = {true}/> 
          <h1 
          onClick={() => newSelected(0)}
          className='p-2 mt-2 w-64 text-center text-blue-500 hover:text-blue-700'
@@ -30,7 +30,7 @@ const Home = () => {
       {selected === 2 && 
 
       <>
-        <CreateSession /> 
+        <CreateSession isAdmin = {true} /> 
         <h1 
          onClick={() => newSelected(0)}
          className='p-2 mt-2 w-64 text-center text-blue-500 hover:text-blue-700'
@@ -42,18 +42,26 @@ const Home = () => {
       
       }
       {selected === 0 &&
-        <Card className='grid grid-row-1 gap-12 w-48 max-w-3xl p-8 m-auto my-16'>
+        <Card className='grid grid-row-1 gap-12 w-100 max-w-3xl p-8 m-auto my-16'>
           <CardHeader>
-            {selected === 1 ? null : <CardTitle onClick={() => newSelected(1)} >Create User</CardTitle>}
+            {selected === 1 ? null : 
+              <CardTitle onClick={() => newSelected(1)} className='underline underline-offset-4'>
+                Create User
+              </CardTitle>
+            }
           </CardHeader>
           <Separator className=''/>
           <CardHeader>
             
-            {selected ===2 ? null : <CardTitle onClick={() => newSelected(2)}>Create Session</CardTitle>}
+            {selected ===2 ? null : 
+              <CardTitle onClick={() => newSelected(2)} className='underline underline-offset-4'>
+                Create Session
+              </CardTitle>
+            }
           </CardHeader>
-          <CardHeader className='border-l-4 border-indigo-500'>
+          <CardHeader className=''>
             <Link href="/admin/dashboard">
-            <CardTitle>Dashboard</CardTitle>
+            <CardTitle className='underline underline-offset-4'>Dashboard</CardTitle>
             </Link>
           </CardHeader>
         </Card>

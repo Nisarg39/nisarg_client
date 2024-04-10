@@ -59,16 +59,38 @@ export async function getClients() {
     const allClients = []
     for (let i = 0; i < clients.length; i++) {
         const client = clients[i]
-        const { firm, email, address, owner_name, productName, _id } = client
+        const { firm, email, address, owner_name, productName, _id, token } = client
         const clientObj = {
             firm,
             email,
             address,
             owner_name,
             productName,
-            _id
+            _id,
+            token
         }
         allClients.push(clientObj)
     }
     return allClients
 }
+
+export async function updateSession({ sessionId, summary, startTime, endTime, sessionDate, paymentStatus }) {
+  connectToDB();
+
+  const session = await Session.findOne({ _id: sessionId });
+
+  session.summary = summary;
+  session.startTime = startTime;
+  session.endTime = endTime;
+  session.sessionDate = sessionDate;
+  session.paymentStatus = paymentStatus;
+
+  await session.save();
+
+  return {
+    status: true,
+    message: "session updated",
+  };
+}
+
+

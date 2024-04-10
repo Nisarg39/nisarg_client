@@ -14,12 +14,13 @@ import { useState } from "react";
 
 import { createUser } from "@/app/admin/admin_actions"
 
-export function CreateUserForm() {
+export function CreateUserForm(props: any) {
     const [email, setEmail] = useState("");
     const [firm, setFirm] = useState("");
     const [address, setAddress] = useState("")
     const [owner_name, setOwner] = useState("")
     const [productName, setProductName] = useState("")
+    const [isAdmin, setIsAdmin] = useState(props.isAdmin)
 
   const handleSubmit = async () => {
     const response = await createUser(firm, email, address, owner_name, productName);
@@ -89,7 +90,11 @@ export function CreateUserForm() {
 
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSubmit}>Create User</Button>
+        {isAdmin ? (
+          <Button onClick={handleSubmit}>Create User</Button>
+        ) : (
+          <Button className="" onClick={() => alert("A new Client will be created (only for admin)")}>Create Client</Button>
+        )}
       </CardFooter>
     </Card>
   );

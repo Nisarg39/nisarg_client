@@ -419,6 +419,7 @@ export function Dashboard(props: any) {
                             paymentStatus = {session.paymentStatus}
                             sessionDate = {session.sessionDate}
                             summary = {session.summary}
+                            isAdmin = {props.isAdmin}
                           />
                         ))}
 

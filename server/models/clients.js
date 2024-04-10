@@ -35,7 +35,6 @@ const clientSchema = new mongoose.Schema({
   }
 },{
   timestamps: true,
-  strict: true
 });
 
 const Client =mongoose.models.Client ||  mongoose.model('Client', clientSchema);

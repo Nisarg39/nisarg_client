@@ -26,12 +26,14 @@ import { newSession } from "@/app/admin/admin_actions";
 import { getClients } from "@/app/admin/admin_actions";
 import { DatePicker } from "./DatePicker";
 
-export function CreateSession() {
+export function CreateSession(props: any) {
+
   const [firmList, setFirmList] = useState([{ firm: "", _id: "" }]);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [position, setPosition] = useState("Client Name");
   const [sessionDate, setSessionDate] = useState("");
+  const [isAdmin, setIsAdmin] = useState(props.isAdmin);
 
   async function getDetails() {
     const details = await getClients();
@@ -130,7 +132,11 @@ export function CreateSession() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSubmit}>Create Session</Button>
+        {isAdmin? (
+          <Button onClick={handleSubmit}>Create Session</Button>
+        ) : (
+          <Button onClick={() => alert("A session will be created for that particular firm (only for admin)" )}>Create Session</Button>
+        )}
       </CardFooter>
     </Card>
   );

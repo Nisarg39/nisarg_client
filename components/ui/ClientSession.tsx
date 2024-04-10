@@ -1,20 +1,42 @@
-import {
-    TableCell,
-    TableRow,
-  } from "@/components/ui/table"
-import { 
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-    DropdownMenuLabel,
- } from "@radix-ui/react-dropdown-menu";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Input } from "./input";
 
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "./button";
-import { Card } from "./card";
+import SessionActions from "./SessionActions";
 
-export function ClientSession (props: any){
+import { useState } from "react";
+import { updateSession } from "@/app/admin/admin_actions";
+
+export function ClientSession(props: any) {
+  const [editClicked, setEditClicked] = useState(false);
+
+  const [sessionId, setSessionId] = useState(props.sessionId);
+  const [summary, setSummary] = useState(props.summary);
+  const [paymentStatus, setPaymentStatus] = useState(props.paymentStatus);
+  const [sessionDate, setSessionDate] = useState(props.sessionDate);
+  const [startTime, setStartTime] = useState(props.startTime);
+  const [endTime, setEndTime] = useState(props.endTime);
+
+  function handleEdit() {
+    setEditClicked(true);
+  }
+
+  async function handleSave() {
+    setEditClicked(false);
+    const updatedSessionDetails = {
+      sessionId: sessionId,
+      summary: summary,
+      paymentStatus: paymentStatus,
+      sessionDate: sessionDate,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    const sessionResult = await updateSession(updatedSessionDetails);
+    if(sessionResult.status == true){
+        alert("Session Updated Successfully");
+    }else{
+        alert("Error Updating Session");
+    }
+  }
 
   return (
     <>
@@ -24,40 +46,76 @@ export function ClientSession (props: any){
           {props.index + 1}
         </TableCell>
         <TableCell className="hidden md:table-cell">
-          {props.summary}
+          {editClicked ? (
+            <Input
+              className="w-full"
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+            />
+          ) : (
+            <span className="text-sm">{summary}</span>
+          )}
         </TableCell>
-        {props.paymentStatus ? 
-            <TableCell className="hidden md:table-cell text-green-600">Paid</TableCell>
-            : 
-            <TableCell className="hidden md:table-cell text-red-600">Pending</TableCell>
-        }
-        
+        {paymentStatus ? (
+          <TableCell className="hidden md:table-cell text-green-600" onClick={() => setPaymentStatus(false)}>
+            Paid
+          </TableCell>
+        ) : (
+          <TableCell className="hidden md:table-cell text-red-600" onClick={() => setPaymentStatus(true)}>
+            Pending
+          </TableCell>
+        )}
+
         {/* <TableCell className="hidden md:table-cell">{props.pricing}</TableCell> */}
-        <TableCell className="hidden md:table-cell">{props.sessionDate}</TableCell>
         <TableCell className="hidden md:table-cell">
-          {props.startTime}
+          {editClicked ? (
+            <Input
+              className="w-full"
+              value={sessionDate}
+              onChange={(e) => setSessionDate(e.target.value)}
+            />
+          ) : (
+            <span className="text-sm">{sessionDate}</span>
+          )}
         </TableCell>
-        <TableCell className="hidden md:table-cell">{props.endTime}</TableCell>
-        <TableCell>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button aria-haspopup="true" size="icon" variant="ghost">
-                <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <Card className="bg-black text-slate-900 p-4 shadow-sm rounded w-full">
-                {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
-                <DropdownMenuItem className="p-2">Edit</DropdownMenuItem>
-                <DropdownMenuItem className="p-2">Delete</DropdownMenuItem>
-              </Card>
-            </DropdownMenuContent>
-          </DropdownMenu>
+
+        <TableCell className="hidden md:table-cell">
+          {editClicked ? (
+            <Input
+              className="w-full"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+            />
+          ) : (
+            <span className="text-sm">{startTime}</span>
+          )}
         </TableCell>
+
+        <TableCell className="hidden md:table-cell pe-2">
+            {editClicked ? (
+            <Input
+              className="w-full"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+            />
+          ) : (
+            <span className="text-sm">{endTime}</span>
+          )}
+        </TableCell>
+
+        {/* dropdown only if isAdmin is true passed from props */}
+        {props.isAdmin ? (
+          <TableCell>
+            <SessionActions
+              sessionId={sessionId}
+              handleEdit={handleEdit}
+              handleSave={handleSave}
+            />
+          </TableCell>
+        ) : null}
       </TableRow>
     </>
   );
 }
 
-export default ClientSession
+export default ClientSession;

@@ -30,7 +30,6 @@ const sessionSchema = new mongoose.Schema({
 },
 {
   timestamps: true,
-  strict: true
 }
 );
 
