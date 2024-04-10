@@ -7,7 +7,6 @@ import { Card,
   CardTitle, 
 } from '@/components/ui/card'
 import Link from 'next/link'
-import { Separator } from '@radix-ui/react-dropdown-menu'
 import { useState } from 'react'
 
 export default function Page(){
@@ -45,18 +44,18 @@ export default function Page(){
           {selected === 0 && (
             <Card className="grid grid-row-1 gap-12 w-64 max-w-3xl p-4">
               <CardHeader>
-                {selected === 1 ? null : (
+                
                   <CardTitle onClick={() => newSelected(1)} className='underline underline-offset-4'>
                     Create User
                   </CardTitle>
-                )}
+                
               </CardHeader>
               <CardHeader>
-                {selected === 2 ? null : (
+                
                   <CardTitle onClick={() => newSelected(2)} className='underline underline-offset-4'>
                     Create Session
                   </CardTitle>
-                )}
+                
               </CardHeader>
               <CardHeader className="">
                 <Link href="/recruiter/dashboard">
